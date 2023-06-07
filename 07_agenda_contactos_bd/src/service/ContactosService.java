@@ -3,8 +3,10 @@ package service;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import model.Contacto;
@@ -34,7 +36,24 @@ public class ContactosService {
         }
 	}
 	public Contacto buscarContacto(Integer numero) {
-		return null;
+		Contacto contacto = null;
+        String sql = "select * from contactos where telefono=?";
+        
+        try (Connection con = DriverManager.getConnection(url,usuario,password)){
+            PreparedStatement ps=con.prepareStatement(sql);
+            ps.setInt(1, numero);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                contacto=new Contacto(rs.getInt("telefono"), 
+                		rs.getString("nombre"), 
+                		rs.getString("email"), 
+                		rs.getInt("edad"));
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contacto;
 	}
 	public void eliminarContacto(Integer numero) {
 		try (Connection con = DriverManager.getConnection(url, usuario, password)) {
@@ -51,7 +70,22 @@ public class ContactosService {
         }
 	}
 	public List<Contacto> contactos() {		
-		
-		return null;
+		List<Contacto> contactos = new ArrayList<Contacto>();
+        String sql = "select * from contactos";
+        
+        try (Connection con = DriverManager.getConnection(url,usuario,password)){
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()) {
+                contactos.add(new Contacto(rs.getInt("telefono"), 
+                		rs.getString("nombre"), 
+                		rs.getString("email"), 
+                		rs.getInt("edad")));
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contactos;
 	}
 }
