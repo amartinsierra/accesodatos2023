@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import model.Pedido;
 
@@ -27,7 +28,7 @@ public class PedidosFicheroService {
 				String[] datos=s.split("[,]");
 				return new Pedido(0,datos[0],Integer.parseInt(datos[1]),LocalDate.parse(datos[2],DateTimeFormatter.ofPattern("dd/MM/yyyy")),tienda);
 			})
-			.toList();
+			.collect(Collectors.toList());
 		}catch(IOException ex) {
 			ex.printStackTrace();
 			return List.of(); //lista vacía
