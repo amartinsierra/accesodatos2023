@@ -25,7 +25,7 @@ public class PedidosBdService {
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()) {
                 pedidos.add(new Pedido(rs.getInt("idPedido"), 
-                		rs.getString("nombre"), 
+                		rs.getString("producto"), 
                 		rs.getInt("unidades"), 
                 		rs.getDate("fecha").toLocalDate(),
                 		rs.getString("tienda")));
@@ -66,7 +66,7 @@ public class PedidosBdService {
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()) {
                 pedidos.add(new Pedido(rs.getInt("idPedido"), 
-                		rs.getString("nombre"), 
+                		rs.getString("producto"), 
                 		rs.getInt("unidades"), 
                 		rs.getDate("fecha").toLocalDate(),
                 		rs.getString("tienda")));
