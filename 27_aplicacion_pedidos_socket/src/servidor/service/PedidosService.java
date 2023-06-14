@@ -17,8 +17,7 @@ public class PedidosService {
 	
 	public List<Pedido> pedidosTienda(String tienda){
 		List<Pedido> pedidos = new ArrayList<>();
-        String sql = "select * from pedidos where tienda=?";
-        
+        String sql = "select * from pedidos where tienda=?";       
         try (Connection con = DriverManager.getConnection(cadenaCon,user,pwd)){
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, tienda);
